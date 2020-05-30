@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Algebra 1",
+    "description": "Fundamentals of Maths"
+  },
+  {
+    "id": 2,
+    "name": "Biology",
+    "description": "Understanding the life of living organisms"
+  },
+  {
+    "id": 3,
+    "name": "English",
+    "description": "Writing, listening, speaking in English"
+  }
+]

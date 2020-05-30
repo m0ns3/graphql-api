@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "courseId": "1",
+    "studentId": "1",
+    "grade": "Pass"
+  },
+  {
+    "id": 2,
+    "courseId": "1",
+    "studentId": "1",
+    "grade": "Regular"
+  },
+  {
+    "id": 3,
+    "courseId": "1",
+    "studentId": "1",
+    "grade": "Insufficient"
+  }
+]
