@@ -68,7 +68,70 @@ const GradeType = new GraphQLObjectType({
   })
 });
 
-//Query
+//Mutations
+const RootMutationType = new GraphQLObjectType({
+  name: "Mutation",
+  description: "Root Mutation",
+  fields: () => ({
+    addCourse: {
+      type: CourseType,
+      description: "Add a course",
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLNonNull(GraphQLString) }
+      },
+      resolve: (parent, args) => {
+        const course = {
+          id: courses.length + 1,
+          name: args.name,
+          description: args.description
+        };
+        courses.push(course);
+        return course;
+      }
+    },
+    addStudent: {
+      type: StudentType,
+      description: "Add a student",
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        lastname: { type: GraphQLNonNull(GraphQLString) },
+        courseId: { type: GraphQLNonNull(GraphQLInt) }
+      },
+      resolve: (parent, args) => {
+        const student = {
+          id: students.length + 1,
+          name: args.name,
+          lastname: args.lastname,
+          courseId: args.courseId
+        };
+        students.push(student);
+        return student;
+      }
+    },
+    addGrade: {
+      type: GradeType,
+      description: "Add a grade",
+      args: {
+        grade: { type: GraphQLNonNull(GraphQLString) },
+        courseId: { type: GraphQLNonNull(GraphQLInt) },
+        studentId: { type: GraphQLNonNull(GraphQLInt) }
+      },
+      resolve: (parent, args) => {
+        const grade = {
+          id: grades.length + 1,
+          grade: args.grade,
+          courseId: args.courseId,
+          studentId: args.studentId
+        };
+        grades.push(grade);
+        return grade;
+      }
+    }
+  })
+});
+
+//Queries
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
   description: "Root Query",
@@ -118,8 +181,8 @@ const RootQueryType = new GraphQLObjectType({
 
 //Schema
 const schema = new GraphQLSchema({
-  query: RootQueryType
-  //mutation: RootMutationType
+  query: RootQueryType,
+  mutation: RootMutationType
 });
 
 app.use(
