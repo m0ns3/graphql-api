@@ -1,20 +1,38 @@
 [
   {
     "id": 1,
-    "courseId": "1",
-    "studentId": "1",
-    "grade": "Pass"
+    "grade": "Pass",
+    "courseId": 1,
+    "studentId": 1
   },
   {
     "id": 2,
-    "courseId": "1",
-    "studentId": "1",
-    "grade": "Regular"
+    "grade": "Regular",
+    "courseId": 1,
+    "studentId": 2
   },
   {
     "id": 3,
-    "courseId": "1",
-    "studentId": "1",
-    "grade": "Insufficient"
+    "grade": "Insufficient",
+    "courseId": 1,
+    "studentId": 3
+  },
+  {
+    "id": 4,
+    "grade": "Pass",
+    "courseId": 2,
+    "studentId": 1
+  },
+  {
+    "id": 5,
+    "grade": "Regular",
+    "courseId": 2,
+    "studentId": 2
+  },
+  {
+    "id": 6,
+    "grade": "Insufficient",
+    "courseId": 3,
+    "studentId": 3
   }
 ]
