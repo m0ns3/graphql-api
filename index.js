@@ -11,6 +11,7 @@ const {
 } = require("graphql");
 
 const existsIds = require("./existsId");
+const _ = require("lodash");
 
 app.listen(3000, () => {
   console.log("Server running");
@@ -84,7 +85,7 @@ const RootMutationType = new GraphQLObjectType({
       },
       resolve: (parent, args) => {
         const course = {
-          id: courses.length + 1,
+          id: courses[courses.length - 1].id + 1,
           name: args.name,
           description: args.description
         };
@@ -103,7 +104,7 @@ const RootMutationType = new GraphQLObjectType({
       resolve: (parent, args) => {
         if (existsIds.existId(courses, args.courseId)) {
           const student = {
-            id: students.length + 1,
+            id: students[students.length - 1].id + 1,
             name: args.name,
             lastname: args.lastname,
             courseId: args.courseId
@@ -128,7 +129,7 @@ const RootMutationType = new GraphQLObjectType({
         if (existsIds.existId(courses, args.courseId)) {
           if (existsIds.existId(students, args.studentId)) {
             const grade = {
-              id: grades.length + 1,
+              id: grades[grades.length - 1].id + 1,
               grade: args.grade,
               courseId: args.courseId,
               studentId: args.studentId
@@ -140,6 +141,66 @@ const RootMutationType = new GraphQLObjectType({
           }
         } else {
           throw new Error("Doesn't exist that courseId.");
+        }
+      }
+    },
+    deleteCourse: {
+      type: CourseType,
+      description: "Delete a course",
+      args: {
+        id: { type: GraphQLInt }
+      },
+      resolve: (parent, args) => {
+        if (existsIds.existId(courses, args.id)) {
+          if (!existsIds.existId(students, args.id)) {
+            _.remove(courses, course => {
+              return course.id == args.id;
+            });
+          } else {
+            throw new Error(
+              "You should not delete a course associated with a student."
+            );
+          }
+        } else {
+          throw new Error("Doesn't exist that courseId.");
+        }
+      }
+    },
+    deleteStudent: {
+      type: StudentType,
+      description: "Delete a student",
+      args: {
+        id: { type: GraphQLInt }
+      },
+      resolve: (parent, args) => {
+        if (existsIds.existId(students, args.id)) {
+          if (!existsIds.existId(grades, args.id)) {
+            _.remove(students, student => {
+              return student.id == args.id;
+            });
+          } else {
+            throw new Error(
+              "You should not delete a student associated with a grade."
+            );
+          }
+        } else {
+          throw new Error("Doesn't exist that studentId.");
+        }
+      }
+    },
+    deleteGrade: {
+      type: GradeType,
+      description: "Delete a grade",
+      args: {
+        id: { type: GraphQLInt }
+      },
+      resolve: (parent, args) => {
+        if (existsIds.existId(grades, args.id)) {
+          _.remove(grades, grade => {
+            return grade.id == args.id;
+          });
+        } else {
+          throw new Error("Doesn't exist that gradeId.");
         }
       }
     }
