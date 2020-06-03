@@ -10,6 +10,8 @@ const {
   GraphQLInt
 } = require("graphql");
 
+const existsIds = require("./existsId");
+
 app.listen(3000, () => {
   console.log("Server running");
 });
@@ -99,14 +101,19 @@ const RootMutationType = new GraphQLObjectType({
         courseId: { type: GraphQLNonNull(GraphQLInt) }
       },
       resolve: (parent, args) => {
-        const student = {
-          id: students.length + 1,
-          name: args.name,
-          lastname: args.lastname,
-          courseId: args.courseId
-        };
-        students.push(student);
-        return student;
+        if (existsIds.existCourse(courses, args.courseId)) {
+          const student = {
+            id: students.length + 1,
+            name: args.name,
+            lastname: args.lastname,
+            courseId: args.courseId
+          };
+
+          students.push(student);
+          return student;
+        } else {
+          throw new Error("Doesn't exist that courseId.");
+        }
       }
     },
     addGrade: {
@@ -118,14 +125,22 @@ const RootMutationType = new GraphQLObjectType({
         studentId: { type: GraphQLNonNull(GraphQLInt) }
       },
       resolve: (parent, args) => {
-        const grade = {
-          id: grades.length + 1,
-          grade: args.grade,
-          courseId: args.courseId,
-          studentId: args.studentId
-        };
-        grades.push(grade);
-        return grade;
+        if (existsIds.existCourse(courses, args.courseId)) {
+          if (existsIds.existStudent(students, args.studentId)) {
+            const grade = {
+              id: grades.length + 1,
+              grade: args.grade,
+              courseId: args.courseId,
+              studentId: args.studentId
+            };
+            grades.push(grade);
+            return grade;
+          } else {
+            throw new Error("Doesn't exist that studentId.");
+          }
+        } else {
+          throw new Error("Doesn't exist that courseId.");
+        }
       }
     }
   })
