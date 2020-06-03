@@ -1,42 +1,14 @@
-existCourse = (courses, id) => {
-  let courseExists = false;
+existId = (arr, id) => {
+  let exists = false;
 
-  for (let i = 0; i < courses.length; i++) {
-    if (courses[i].id === id) {
-      courseExists = true;
-
-      break;
-    }
-  }
-  return courseExists;
-};
-
-existStudent = (students, id) => {
-  let studentExists = false;
-
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].id === id) {
-      studentExists = true;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].id === id) {
+      exists = true;
 
       break;
     }
   }
-  return studentExists;
+  return exists;
 };
 
-existGrade = (grades, id) => {
-  let gradesExists = false;
-
-  for (let i = 0; i < grades.length; i++) {
-    if (grades[i].id === id) {
-      gradeExists = true;
-
-      break;
-    }
-  }
-  return gradesExists;
-};
-
-module.exports.existCourse = existCourse;
-module.exports.existStudent = existStudent;
-module.exports.existGrade = existGrade;
+module.exports.existId = existId;

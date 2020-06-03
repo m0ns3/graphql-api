@@ -101,7 +101,7 @@ const RootMutationType = new GraphQLObjectType({
         courseId: { type: GraphQLNonNull(GraphQLInt) }
       },
       resolve: (parent, args) => {
-        if (existsIds.existCourse(courses, args.courseId)) {
+        if (existsIds.existId(courses, args.courseId)) {
           const student = {
             id: students.length + 1,
             name: args.name,
@@ -125,8 +125,8 @@ const RootMutationType = new GraphQLObjectType({
         studentId: { type: GraphQLNonNull(GraphQLInt) }
       },
       resolve: (parent, args) => {
-        if (existsIds.existCourse(courses, args.courseId)) {
-          if (existsIds.existStudent(students, args.studentId)) {
+        if (existsIds.existId(courses, args.courseId)) {
+          if (existsIds.existId(students, args.studentId)) {
             const grade = {
               id: grades.length + 1,
               grade: args.grade,
